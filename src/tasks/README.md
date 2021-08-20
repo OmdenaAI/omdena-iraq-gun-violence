@@ -11,6 +11,6 @@ Note : Please Follow the below guidelines to create task folders
 
 | Task No| Task Name | Details |
 |-|-|-|
-|1|         |         |
+|1|task-1-data-scraping|Web scraping social media and othe website to get Iraqi dialect arabic sentences|
 |2|         |         |
 |3|         |         |
