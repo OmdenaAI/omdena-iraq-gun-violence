@@ -1,0 +1,440 @@
+Created 1015 entries for ضرب
+ 
+Created 244 entries for ضرب
+ 
+Created 1009 entries for قتل
+ 
+Created 247 entries for قتل
+ 
+Created 1019 entries for قتلوا
+ 
+Created 57 entries for قتلوا
+ 
+Created 1001 entries for قتلت
+ 
+Created 156 entries for قتلت
+ 
+Created 1008 entries for قوات
+ 
+Created 250 entries for قوات
+ 
+Created 1019 entries for ارهاب
+ 
+Created 34 entries for ارهاب
+ 
+Created 1007 entries for ارهابية
+ 
+Created 67 entries for ارهابية
+ 
+Created 1000 entries for ضربت
+ 
+Created 137 entries for ضربت
+ 
+Created 879 entries for ضربوا
+ 
+Created 4 entries for ضربوا
+ 
+Created 1016 entries for ضرب
+ 
+Created 244 entries for ضرب
+ 
+Created 342 entries for اغتيل
+ 
+Created 6 entries for اغتيل
+ 
+Created 149 entries for اغتالت
+ 
+Created 7 entries for اغتالت
+ 
+Created 200 entries for اغتالوا
+ 
+Created 14 entries for اغتالوا
+ 
+Created 1018 entries for تصفية
+ 
+Created 149 entries for تصفية
+ 
+Created 20 entries for اطلاقات نارية
+ 
+Created 0 entries for اطلاقات نارية
+ 
+Created 1007 entries for اعتدى
+ 
+Created 44 entries for اعتدى
+ 
+Created 1005 entries for اعتدت
+ 
+Created 45 entries for اعتدت
+ 
+Created 374 entries for اعتدوا
+ 
+Created 15 entries for اعتدوا
+ 
+Created 812 entries for قصفت
+ 
+Created 42 entries for قصفت
+ 
+Created 1004 entries for قصف
+ 
+Created 244 entries for قصف
+ 
+Created 1016 entries for انفجرت
+ 
+Created 34 entries for انفجرت
+ 
+Created 1005 entries for انفجار
+ 
+Created 249 entries for انفجار
+ 
+Created 1014 entries for انفجارات
+ 
+Created 155 entries for انفجارات
+ 
+Created 1012 entries for دمار
+ 
+Created 99 entries for دمار
+ 
+Created 1013 entries for انهيار
+ 
+Created 237 entries for انهيار
+ 
+Created 1009 entries for تدمر
+ 
+Created 236 entries for تدمر
+ 
+Created 302 entries for يتدمر
+ 
+Created 0 entries for يتدمر
+ 
+Created 1019 entries for ينهار
+ 
+Created 94 entries for ينهار
+ 
+Created 559 entries for سفك الدماء
+ 
+Created 3 entries for سفك الدماء
+ 
+Created 40 entries for هدر الدماء
+ 
+Created 0 entries for هدر الدماء
+ 
+Created 1014 entries for ارهابيين
+ 
+Created 30 entries for ارهابيين
+ 
+Created 1017 entries for ارهابي
+ 
+Created 97 entries for ارهابي
+ 
+Created 250 entries for حزام ناسف
+ 
+Created 6 entries for حزام ناسف
+ 
+Created 974 entries for عبوة
+ 
+Created 244 entries for عبوة
+ 
+Created 547 entries for طلقات
+ 
+Created 22 entries for طلقات
+ 
+Created 1004 entries for مسدس
+ 
+Created 83 entries for مسدس
+ 
+Created 59 entries for عيار ناري
+ 
+Created 3 entries for عيار ناري
+ 
+Created 63 entries for عيارات نارية
+ 
+Created 2 entries for عيارات نارية
+ 
+Created 197 entries for قاذفات
+ 
+Created 19 entries for قاذفات
+ 
+Created 314 entries for قاذفه
+ 
+Created 1 entries for قاذفه
+ 
+Created 422 entries for هاون
+ 
+Created 37 entries for هاون
+ 
+Created 229 entries for رشاشة
+ 
+Created 9 entries for رشاشة
+ 
+Created 1013 entries for احترقت
+ 
+Created 15 entries for احترقت
+ 
+Created 1010 entries for حرق
+ 
+Created 245 entries for حرق
+ 
+Created 1000 entries for حرقوا
+ 
+Created 5 entries for حرقوا
+ 
+Created 1019 entries for مجرمين
+ 
+Created 22 entries for مجرمين
+ 
+Created 1019 entries for مجرم
+ 
+Created 228 entries for مجرم
+ 
+Created 260 entries for اجرموا
+ 
+Created 0 entries for اجرموا
+ 
+Created 1015 entries for قاتل
+ 
+Created 247 entries for قاتل
+ 
+Created 1000 entries for سارق
+ 
+Created 212 entries for سارق
+ 
+Created 1006 entries for قتله
+ 
+Created 148 entries for قتله
+ 
+Created 617 entries for نهبوا
+ 
+Created 7 entries for نهبوا
+ 
+Created 1009 entries for خطف
+ 
+Created 110 entries for خطف
+ 
+Created 1017 entries for حاربوا
+ 
+Created 7 entries for حاربوا
+ 
+Created 1010 entries for قامه
+ 
+Created 1 entries for قامه
+ 
+Created 1009 entries for سجينة
+ 
+Created 19 entries for سجينة
+ 
+Created 1009 entries for طعنه
+ 
+Created 86 entries for طعنه
+ 
+Created 1018 entries for حربة
+ 
+Created 9 entries for حربة
+ 
+Created 845 entries for بندقية
+ 
+Created 75 entries for بندقية
+ 
+Created 1002 entries for قناص
+ 
+Created 85 entries for قناص
+ 
+Created 20 entries for رمانة يدوية
+ 
+Created 0 entries for رمانة يدوية
+ 
+Created 66 entries for دكة عشائرية
+ 
+Created 1 entries for دكة عشائرية
+ 
+Created 40 entries for مطلوب عشائريا
+ 
+Created 0 entries for مطلوب عشائريا
+ 
+Created 4 entries for مطلوب ثار
+ 
+Created 1 entries for مطلوب ثار
+ 
+Created 20 entries for كعدة عشائرية
+ 
+Created 0 entries for كعدة عشائرية
+ 
+Created 1015 entries for مواجهات
+ 
+Created 249 entries for مواجهات
+ 
+Created 1004 entries for عنف
+ 
+Created 151 entries for عنف
+ 
+Created 1006 entries for بي كي سي
+ 
+Created 7 entries for بي كي سي
+ 
+Created 1018 entries for دبابة
+ 
+Created 70 entries for دبابة
+ 
+Created 1013 entries for رتل
+ 
+Created 125 entries for رتل
+ 
+Created 1005 entries for كمين
+ 
+Created 95 entries for كمين
+ 
+Created 1000 entries for مات
+ 
+Created 227 entries for مات
+ 
+Created 1018 entries for موتوا
+ 
+Created 4 entries for موتوا
+ 
+Created 1017 entries for حربية
+ 
+Created 189 entries for حربية
+ 
+Created 1013 entries for حرب اهلية
+ 
+Created 88 entries for حرب اهلية
+ 
+Created 1000 entries for حرب
+ 
+Created 245 entries for حرب
+ 
+Created 1016 entries for طائفية
+ 
+Created 33 entries for طائفية
+ 
+Created 106 entries for قطع طرق
+ 
+Created 248 entries for قطع طرق
+ 
+Created 39 entries for تسليب
+ 
+Created 0 entries for تسليب
+ 
+Created 529 entries for شنق
+ 
+Created 14 entries for شنق
+ 
+Created 1012 entries for تعذيب
+ 
+Created 116 entries for تعذيب
+ 
+Created 826 entries for سحل
+ 
+Created 10 entries for سحل
+ 
+Created 1005 entries for كتل
+ 
+Created 83 entries for كتل
+ 
+Created 42 entries for دمه مهدور
+ 
+Created 0 entries for دمه مهدور
+ 
+Created 186 entries for مطلوب دم
+ 
+Created 34 entries for مطلوب دم
+ 
+Created 40 entries for كوامة
+ 
+Created 0 entries for كوامة
+ 
+Created 5 entries for اكص راسك
+ 
+Created 0 entries for اكص راسك
+ 
+Created 343 entries for اذبحك
+ 
+Created 0 entries for اذبحك
+ 
+Created 1006 entries for ذبح
+ 
+Created 141 entries for ذبح
+ 
+Created 1007 entries for سبي
+ 
+Created 12 entries for سبي
+ 
+Created 914 entries for دجل
+ 
+Created 30 entries for دجل
+ 
+Created 1019 entries for دجال
+ 
+Created 33 entries for دجال
+ 
+Created 1014 entries for حرامية
+ 
+Created 11 entries for حرامية
+ 
+Created 1009 entries for سبي 
+ 
+Created 12 entries for سبي 
+ 
+Created 1011 entries for سبية
+ 
+Created 0 entries for سبية
+ 
+Created 950 entries for روافض
+ 
+Created 1 entries for روافض
+ 
+Created 1009 entries for رافضة
+ 
+Created 30 entries for رافضة
+ 
+Created 1009 entries for خوارج
+ 
+Created 8 entries for خوارج
+ 
+Created 1005 entries for نصارى
+ 
+Created 15 entries for نصارى
+ 
+Created 1016 entries for يهود
+ 
+Created 122 entries for يهود
+ 
+Created 413 entries for نواصب
+ 
+Created 1 entries for نواصب
+ 
+Created 42 entries for صكاك
+ 
+Created 0 entries for صكاك
+ 
+Created 180 entries for اصكه
+ 
+Created 0 entries for اصكه
+ 
+Created 73 entries for اولاد المتعة
+ 
+Created 4 entries for اولاد المتعة
+ 
+Created 800 entries for عركة
+ 
+Created 3 entries for عركة
+ 
+Created 453 entries for نتعارك
+ 
+Created 2 entries for نتعارك
+ 
+Created 60 entries for سلابه
+ 
+Created 0 entries for سلابه
+ 
+Created 1013 entries for حراميه
+ 
+Created 4 entries for حراميه
+ 
+Created 373 entries for زنادقة
+ 
+Created 3 entries for زنادقة
+ 
+Created 880 entries for زنديق
+ 
+Created 4 entries for زنديق
+ 
