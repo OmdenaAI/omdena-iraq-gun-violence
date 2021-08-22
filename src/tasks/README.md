@@ -14,3 +14,6 @@ Note : Please Follow the below guidelines to create task folders
 |1|task-1-data-scraping|Web scraping social media and othe website to get Iraqi dialect arabic sentences|
 |2|         |         |
 |3|         |         |
+|4|         |         |
+|5|         |         |
+|6|task-6-data-visualization-documentation|Using cleaned data and labeled data to create visualizations. Create final report|
