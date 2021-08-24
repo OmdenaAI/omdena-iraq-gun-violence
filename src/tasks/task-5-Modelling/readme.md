@@ -9,4 +9,6 @@ This repository contains code for models responsible for predicting violence pro
 |2|         |         |         |
 |3|         |         |         |
 
-
+# Task Goals
+Training different machine learning models to classify violence from non-violent tweets.
+Finding the most effective algorithm for Binary Classification over only 10000 data points.
