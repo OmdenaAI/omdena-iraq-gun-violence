@@ -1,0 +1,406 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "37449259",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "pip install keras"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "59c0d476",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "pip install tensorflow --ignore-installed --user"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "892a2d44",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Requirement already satisfied: gensim in c:\\users\\praka\\appdata\\roaming\\python\\python38\\site-packages (4.0.1)\n",
+      "Requirement already satisfied: numpy>=1.11.3 in c:\\users\\praka\\appdata\\roaming\\python\\python38\\site-packages (from gensim) (1.21.2)\n",
+      "Requirement already satisfied: smart-open>=1.8.1 in c:\\users\\praka\\appdata\\roaming\\python\\python38\\site-packages (from gensim) (5.2.1)\n",
+      "Requirement already satisfied: scipy>=0.18.1 in c:\\users\\praka\\appdata\\roaming\\python\\python38\\site-packages (from gensim) (1.7.1)\n",
+      "Requirement already satisfied: Cython==0.29.21 in c:\\users\\praka\\appdata\\roaming\\python\\python38\\site-packages (from gensim) (0.29.21)\n",
+      "Note: you may need to restart the kernel to use updated packages.\n"
+     ]
+    }
+   ],
+   "source": [
+    "pip install gensim\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "c4b8b1ea",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "C:\\Users\\praka\\AppData\\Roaming\\Python\\Python38\\site-packages\\numpy\\_distributor_init.py:30: UserWarning: loaded more than 1 DLL from .libs:\n",
+      "C:\\Users\\praka\\AppData\\Roaming\\Python\\Python38\\site-packages\\numpy\\.libs\\libopenblas.WCDJNK7YVMPZQ2ME2ZZHJJRJ3JIKNDB7.gfortran-win_amd64.dll\n",
+      "C:\\Users\\praka\\AppData\\Roaming\\Python\\Python38\\site-packages\\numpy\\.libs\\libopenblas.XWYDX2IKJW2NMTWSFYNGFUWKQU3LYTCZ.gfortran-win_amd64.dll\n",
+      "  warnings.warn(\"loaded more than 1 DLL from .libs:\"\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Om sri sairam\n"
+     ]
+    }
+   ],
+   "source": [
+    "import numpy as np\n",
+    "from keras.models import Model, Sequential\n",
+    "from keras.layers import Dense, Input, Dropout, LSTM, Activation\n",
+    "from keras.layers import Bidirectional, GlobalMaxPool1D\n",
+    "from keras.layers.embeddings import Embedding\n",
+    "from keras.preprocessing import sequence\n",
+    "from keras.initializers import glorot_uniform\n",
+    "\n",
+    "from matplotlib import pyplot as plt\n",
+    "%matplotlib inline\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "4d8144d3",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "C:\\Users\\praka\\AppData\\Roaming\\Python\\Python38\\site-packages\\gensim\\similarities\\__init__.py:15: UserWarning: The gensim.similarities.levenshtein submodule is disabled, because the optional Levenshtein package <https://pypi.org/project/python-Levenshtein/> is unavailable. Install Levenhstein (e.g. `pip install python-Levenshtein`) to suppress this warning.\n",
+      "  warnings.warn(msg)\n"
+     ]
+    }
+   ],
+   "source": [
+    "from gensim.models import KeyedVectors\n",
+    "def load_w2v(filepath,binary):\n",
+    "    return KeyedVectors.load_word2vec_format(filepath, binary=binary)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "cda9013c",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "300\n"
+     ]
+    }
+   ],
+   "source": [
+    "# word2vec (via Aziz Alto), : https://drive.google.com/open?id=0ByiDbCx0i9pEQV9ZUEFIb0hwMmM\n",
+    "# 185 MB; vocab=159175; takes ~5-10 secs to load\n",
+    "#w2v = load_w2v(\"/home/zmccoy/sandbox/sentiment-analysis-arabic/arabic-news.bin\", binary=True)\n",
+    "# --\n",
+    "# fastText (via Facebook Research), Wikipedia: https://s3-us-west-1.amazonaws.com/fasttext-vectors/wiki.ar.vec\n",
+    "# 1.5 GB; vocab=610977; takes ~3 mins to load\n",
+    "w2v = load_w2v(r\"C:\\Users\\praka\\Omden\\IraqGunViolence\\wiki.ar.vec\", binary=False)\n",
+    "print(w2v.vector_size)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 35,
+   "id": "1360a556",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "610977\n"
+     ]
+    }
+   ],
+   "source": [
+    "MAX_SEQUENCE_LENGTH = 85 #176 # based on our inputs; TODO: remove outliers? dynamically calculate!\n",
+    "MAX_NB_WORDS = len(w2v.key_to_index)\n",
+    "EMBEDDING_DIM = 300 # w2v, fastText; GloVe=50\n",
+    "print(MAX_NB_WORDS)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "id": "151aa9eb",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "(300,)\n",
+      "[('،حسن', 0.6795670390129089), ('أبوحسن', 0.6792263388633728), ('#حسن', 0.6771580576896667), ('وحسن', 0.6517007350921631), ('لحسن', 0.6505534648895264), ('\\u200fحسن', 0.6446623206138611), ('كحسن', 0.6202388405799866), ('عبدالحسن', 0.6161733865737915), ('بوحسن', 0.6157496571540833), ('د/حسن', 0.6062546372413635)]\n"
+     ]
+    }
+   ],
+   "source": [
+    "sample = w2v[\"حسن\"]\n",
+    "print(sample.shape)\n",
+    "#print(sample)\n",
+    "print(w2v.most_similar(\"حسن\"))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "id": "c6dcb596",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import os\n",
+    "import glob\n",
+    "import codecs\n",
+    "from keras.preprocessing.text import text_to_word_sequence\n",
+    "from keras.preprocessing.text import Tokenizer\n",
+    "from keras.preprocessing.sequence import pad_sequences\n",
+    "\n",
+    "def get_stop_words():\n",
+    "    path = r\"C:\\Users\\praka\\Omden\\IraqGunViolence\\stop-words-list.txt\"\n",
+    "    stop_words = []\n",
+    "    with codecs.open(path, \"r\", encoding=\"utf-8\", errors=\"ignore\") as myfile:\n",
+    "        stop_words = myfile.readlines()\n",
+    "    stop_words = [word.strip() for word in stop_words]\n",
+    "    return stop_words\n",
+    "\n",
+    "def get_label(path):\n",
+    "    filename = path[path.rfind('/'):]\n",
+    "    if filename.startswith(\"/pos\"):\n",
+    "        return np.array([1, 0])\n",
+    "    return np.array([0, 1])\n",
+    "\n",
+    "def get_text(path):\n",
+    "    text = \"\"\n",
+    "    text_words = []\n",
+    "    # use codecs.open to ingnore non utf-8 encoded chars; instead of \"with open(path, 'r') as myfile:\"\n",
+    "    with codecs.open(path, \"r\", encoding=\"utf-8\", errors=\"ignore\") as myfile:\n",
+    "        text = myfile.read()\n",
+    "    words = text.split(\" \")\n",
+    "    stop_words = get_stop_words()\n",
+    "    for word in words:\n",
+    "        if word not in stop_words:\n",
+    "            text_words.append(word)\n",
+    "    return ' '.join(text_words)\n",
+    "\n",
+    "def get_text_sequences(texts):\n",
+    "    tokenizer = Tokenizer(num_words=MAX_NB_WORDS)\n",
+    "    tokenizer.fit_on_texts(texts)\n",
+    "    sequences = tokenizer.texts_to_sequences(texts)\n",
+    "    word_index = tokenizer.word_index\n",
+    "    #print('Found %s unique tokens.' % len(word_index))\n",
+    "    data = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)\n",
+    "    return data, word_index\n",
+    "\n",
+    "def get_data_encoded(path):\n",
+    "    vectors = []\n",
+    "    padded_vectors = []\n",
+    "    unknown_words = []\n",
+    "    labels = []\n",
+    "    all_paths = glob.glob(os.path.join(path,'*.txt'))\n",
+    "    np.random.shuffle(all_paths)\n",
+    "    for path in all_paths:\n",
+    "        # use codecs.open to ingnore non utf-8 encoded chars; instead of \"with open(path, 'r') as myfile:\"\n",
+    "        with codecs.open(path, \"r\", encoding='utf-8', errors='ignore') as myfile:\n",
+    "            text = myfile.read()\n",
+    "            word_sequences = text_to_word_sequence(text,\n",
+    "                                        filters='ا\\n\\ufeff\\xa0!\"#$%&()*+,-./:;<=>?@[\\\\]^_`{|}~\\t',\n",
+    "                                        #filters='!\"#$%&()*+,-./:;<=>?@[\\\\]^_`{|}~\\t\\n',\n",
+    "                                        lower=True,\n",
+    "                                        split=\" \")\n",
+    "            vector = []\n",
+    "            for word in word_sequences:\n",
+    "                stop_words = get_stop_words()\n",
+    "                if word not in stop_words:\n",
+    "                    try:\n",
+    "                        vector.append(w2v[word])\n",
+    "                    except KeyError:\n",
+    "                        # TODO: incrementally update w2v with OOVs (out-of-vocabularies)\n",
+    "                        #print(\"' \" + str(word) + \"' not in vocabulary\")\n",
+    "                        unknown_words.append(word)\n",
+    "            vectors.append(vector)\n",
+    "            label = get_label(path)\n",
+    "            labels.append(label)\n",
+    "    padded_vectors = sequence.pad_sequences(vectors, maxlen=MAX_SEQUENCE_LENGTH)\n",
+    "    return np.array(padded_vectors), np.array(labels), unknown_words\n",
+    "    \n",
+    "def get_data(path):\n",
+    "    texts = []\n",
+    "    labels = []\n",
+    "    all_paths = glob.glob(os.path.join(path,'*.txt'))\n",
+    "    np.random.shuffle(all_paths)\n",
+    "    for path in all_paths: \n",
+    "        texts.append(get_text(path))\n",
+    "        labels.append(get_label(path))\n",
+    "    sequences, word_index = get_text_sequences(texts)\n",
+    "    return sequences, np.array(labels), word_index"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "id": "b0051948",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "['،', 'ء', 'ءَ', 'آ', 'آب', 'آذار', 'آض', 'آل', 'آمينَ', 'آناء', 'آنفا', 'آه', 'آهاً', 'آهٍ', 'آهِ', 'أ', 'أبدا', 'أبريل', 'أبو', 'أبٌ', 'أجل', 'أجمع', 'أحد', 'أخبر', 'أخذ', 'أخو', 'أخٌ', 'أربع', 'أربعاء', 'أربعة', 'أربعمئة', 'أربعمائة', 'أرى', 'أسكن', 'أصبح', 'أصلا', 'أضحى', 'أطعم', 'أعطى', 'أعلم', 'أغسطس', 'أفريل', 'أفعل به', 'أفٍّ', 'أقبل', 'أكتوبر', 'أل', 'ألا', 'ألف', 'ألفى', 'أم', 'أما', 'أمام', 'أمامك', 'أمامكَ', 'أمد', 'أمس', 'أمسى', 'أمّا', 'أن', 'أنا', 'أنبأ', 'أنت', 'أنتم', 'أنتما', 'أنتن', 'أنتِ', 'أنشأ', 'أنه', 'أنًّ', 'أنّى', 'أهلا', 'أو', 'أوت', 'أوشك', 'أول', 'أولئك', 'أولاء', 'أولالك', 'أوّهْ', 'أى', 'أي', 'أيا', 'أيار', 'أيضا', 'أيلول', 'أين', 'أيّ', 'أيّان', 'أُفٍّ', 'ؤ', 'إحدى', 'إذ', 'إذا', 'إذاً', 'إذما', 'إذن', 'إزاء', 'إلى', 'إلي', 'إليكم', 'إليكما', 'إليكنّ', 'إليكَ', 'إلَيْكَ', 'إلّا', 'إمّا', 'إن', 'إنَّ', 'إى', 'إياك', 'إياكم', 'إياكما', 'إياكن', 'إيانا', 'إياه', 'إياها', 'إياهم', 'إياهما', 'إياهن', 'إياي', 'إيهٍ', 'ئ', 'ا', 'ا?', 'ا?ى', 'االا', 'االتى', 'ابتدأ', 'ابين', 'اتخذ', 'اثر', 'اثنا', 'اثنان', 'اثني', 'اثنين', 'اجل', 'احد', 'اخرى', 'اخلولق', 'اذا', 'اربعة', 'اربعون', 'اربعين', 'ارتدّ', 'استحال', 'اصبح', 'اضحى', 'اطار', 'اعادة', 'اعلنت', 'اف', 'اكثر', 'اكد', 'الآن', 'الألاء', 'الألى', 'الا', 'الاخيرة', 'الان', 'الاول', 'الاولى', 'التى', 'التي', 'الثاني', 'الثانية', 'الحالي', 'الذاتي', 'الذى', 'الذي', 'الذين', 'السابق', 'الف', 'اللاتي', 'اللتان', 'اللتيا', 'اللتين', 'اللذان', 'اللذين', 'اللواتي', 'الماضي', 'المقبل', 'الوقت', 'الى', 'الي', 'اليه', 'اليها', 'اليوم', 'اما', 'امام', 'امس', 'امسى', 'ان', 'انبرى', 'انقلب', 'انه', 'انها', 'او', 'اول', 'اي', 'ايار', 'ايام', 'ايضا', 'ب', 'بؤسا', 'بإن', 'بئس', 'باء', 'بات', 'باسم', 'بان', 'بخٍ', 'بد', 'بدلا', 'برس', 'بسبب', 'بسّ', 'بشكل', 'بضع', 'بطآن', 'بعد', 'بعدا', 'بعض', 'بغتة', 'بل', 'بلى', 'بن', 'به', 'بها', 'بهذا', 'بيد', 'بين', 'بَسْ', 'بَلْهَ', 'ة', 'ت', 'تاء', 'تارة', 'تاسع', 'تانِ', 'تانِك', 'تبدّل', 'تجاه', 'تحت', 'تحوّل', 'تخذ', 'ترك', 'تسع', 'تسعة', 'تسعمئة', 'تسعمائة', 'تسعون', 'تسعين', 'تشرين', 'تعسا', 'تعلَّم', 'تفعلان', 'تفعلون', 'تفعلين', 'تكون', 'تلقاء', 'تلك', 'تم', 'تموز', 'تينك', 'تَيْنِ', 'تِه', 'تِي', 'ث', 'ثاء', 'ثالث', 'ثامن', 'ثان', 'ثاني', 'ثلاث', 'ثلاثاء', 'ثلاثة', 'ثلاثمئة', 'ثلاثمائة', 'ثلاثون', 'ثلاثين', 'ثم', 'ثمان', 'ثمانمئة', 'ثمانون', 'ثماني', 'ثمانية', 'ثمانين', 'ثمنمئة', 'ثمَّ', 'ثمّ', 'ثمّة', 'ج', 'جانفي', 'جدا', 'جعل', 'جلل', 'جمعة', 'جميع', 'جنيه', 'جوان', 'جويلية', 'جير', 'جيم', 'ح', 'حاء', 'حادي', 'حار', 'حاشا', 'حاليا', 'حاي', 'حبذا', 'حبيب', 'حتى', 'حجا', 'حدَث', 'حرى', 'حزيران', 'حسب', 'حقا', 'حمدا', 'حمو', 'حمٌ', 'حوالى', 'حول', 'حيث', 'حيثما', 'حين', 'حيَّ', 'حَذارِ', 'خ', 'خاء', 'خاصة', 'خال', 'خامس', 'خبَّر', 'خلا', 'خلافا', 'خلال', 'خلف', 'خمس', 'خمسة', 'خمسمئة', 'خمسمائة', 'خمسون', 'خمسين', 'خميس', 'د', 'دال', 'درهم', 'درى', 'دواليك', 'دولار', 'دون', 'دونك', 'ديسمبر', 'دينار', 'ذ', 'ذا', 'ذات', 'ذاك', 'ذال', 'ذانك', 'ذانِ', 'ذلك', 'ذهب', 'ذو', 'ذيت', 'ذينك', 'ذَيْنِ', 'ذِه', 'ذِي', 'ر', 'رأى', 'راء', 'رابع', 'راح', 'رجع', 'رزق', 'رويدك', 'ريال', 'ريث', 'رُبَّ', 'ز', 'زاي', 'زعم', 'زود', 'زيارة', 'س', 'ساء', 'سابع', 'سادس', 'سبت', 'سبتمبر', 'سبحان', 'سبع', 'سبعة', 'سبعمئة', 'سبعمائة', 'سبعون', 'سبعين', 'ست', 'ستة', 'ستكون', 'ستمئة', 'ستمائة', 'ستون', 'ستين', 'سحقا', 'سرا', 'سرعان', 'سقى', 'سمعا', 'سنة', 'سنتيم', 'سنوات', 'سوف', 'سوى', 'سين', 'ش', 'شباط', 'شبه', 'شتانَ', 'شخصا', 'شرع', 'شمال', 'شيكل', 'شين', 'شَتَّانَ', 'ص', 'صاد', 'صار', 'صباح', 'صبر', 'صبرا', 'صدقا', 'صراحة', 'صفر', 'صهٍ', 'صهْ', 'ض', 'ضاد', 'ضحوة', 'ضد', 'ضمن', 'ط', 'طاء', 'طاق', 'طالما', 'طرا', 'طفق', 'طَق', 'ظ', 'ظاء', 'ظل', 'ظلّ', 'ظنَّ', 'ع', 'عاد', 'عاشر', 'عام', 'عاما', 'عامة', 'عجبا', 'عدا', 'عدة', 'عدد', 'عدم', 'عدَّ', 'عسى', 'عشر', 'عشرة', 'عشرون', 'عشرين', 'عل', 'علق', 'علم', 'على', 'علي', 'عليك', 'عليه', 'عليها', 'علًّ', 'عن', 'عند', 'عندما', 'عنه', 'عنها', 'عوض', 'عيانا', 'عين', 'عَدَسْ', 'غ', 'غادر', 'غالبا', 'غدا', 'غداة', 'غير', 'غين', 'ـ', 'ف', 'فإن', 'فاء', 'فان', 'فانه', 'فبراير', 'فرادى', 'فضلا', 'فقد', 'فقط', 'فكان', 'فلان', 'فلس', 'فهو', 'فو', 'فوق', 'فى', 'في', 'فيفري', 'فيه', 'فيها', 'ق', 'قاطبة', 'قاف', 'قال', 'قام', 'قبل', 'قد', 'قرش', 'قطّ', 'قلما', 'قوة', 'ك', 'كأن', 'كأنّ', 'كأيّ', 'كأيّن', 'كاد', 'كاف', 'كان', 'كانت', 'كانون', 'كثيرا', 'كذا', 'كذلك', 'كرب', 'كسا', 'كل', 'كلتا', 'كلم', 'كلَّا', 'كلّما', 'كم', 'كما', 'كن', 'كى', 'كيت', 'كيف', 'كيفما', 'كِخ', 'ل', 'لأن', 'لا', 'لا سيما', 'لات', 'لازال', 'لاسيما', 'لام', 'لايزال', 'لبيك', 'لدن', 'لدى', 'لدي', 'لذلك', 'لعل', 'لعلَّ', 'لعمر', 'لقاء', 'لكن', 'لكنه', 'لكنَّ', 'للامم', 'لم', 'لما', 'لمّا', 'لن', 'له', 'لها', 'لهذا', 'لهم', 'لو', 'لوكالة', 'لولا', 'لوما', 'ليت', 'ليرة', 'ليس', 'ليسب', 'م', 'مئة', 'مئتان', 'ما', 'ما أفعله', 'ما انفك', 'ما برح', 'مائة', 'ماانفك', 'مابرح', 'مادام', 'ماذا', 'مارس', 'مازال', 'مافتئ', 'ماي', 'مايزال', 'مايو', 'متى', 'مثل', 'مذ', 'مرّة', 'مساء', 'مع', 'معاذ', 'معه', 'مقابل', 'مكانكم', 'مكانكما', 'مكانكنّ', 'مكانَك', 'مليار', 'مليم', 'مليون', 'مما', 'من', 'منذ', 'منه', 'منها', 'مه', 'مهما', 'ميم', 'ن', 'نا', 'نبَّا', 'نحن', 'نحو', 'نعم', 'نفس', 'نفسه', 'نهاية', 'نوفمبر', 'نون', 'نيسان', 'نيف', 'نَخْ', 'نَّ', 'ه', 'هؤلاء', 'ها', 'هاء', 'هاكَ', 'هبّ', 'هذا', 'هذه', 'هل', 'هللة', 'هلم', 'هلّا', 'هم', 'هما', 'همزة', 'هن', 'هنا', 'هناك', 'هنالك', 'هو', 'هي', 'هيا', 'هيهات', 'هيّا', 'هَؤلاء', 'هَاتانِ', 'هَاتَيْنِ', 'هَاتِه', 'هَاتِي', 'هَجْ', 'هَذا', 'هَذانِ', 'هَذَيْنِ', 'هَذِه', 'هَذِي', 'هَيْهات', 'و', 'و6', 'وأبو', 'وأن', 'وا', 'واحد', 'واضاف', 'واضافت', 'واكد', 'والتي', 'والذي', 'وان', 'واهاً', 'واو', 'واوضح', 'وبين', 'وثي', 'وجد', 'وراءَك', 'ورد', 'وعلى', 'وفي', 'وقال', 'وقالت', 'وقد', 'وقف', 'وكان', 'وكانت', 'ولا', 'ولايزال', 'ولكن', 'ولم', 'وله', 'وليس', 'ومع', 'ومن', 'وهب', 'وهذا', 'وهو', 'وهي', 'وَيْ', 'وُشْكَانَ', 'ى', 'ي', 'ياء', 'يفعلان', 'يفعلون', 'يكون', 'يلي', 'يمكن', 'يمين', 'ين', 'يناير', 'يوان', 'يورو', 'يوليو', 'يوم', 'يونيو', 'ّأيّان']\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(get_stop_words())"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "id": "29486826",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "(1800, 85)\n",
+      "(1800, 2)\n",
+      "6447\n",
+      "(200, 85)\n",
+      "(200, 2)\n",
+      "1599\n",
+      "7543\n"
+     ]
+    }
+   ],
+   "source": [
+    "word_index_train = {}\n",
+    "word_index_valid = {}\n",
+    "word_index_test = {}\n",
+    "X_train, y_train, word_index_train = get_data(r\"C:\\Users\\praka\\Omden\\IraqGunViolence\\Combined\\train\")\n",
+    "#X_train, y_train, word_index_train = get_data(\"/home/zmccoy/sandbox/sentiment-analysis-arabic/Erik/train\")\n",
+    "print(X_train.shape)\n",
+    "print(y_train.shape)\n",
+    "print(len(word_index_train))\n",
+    "X_valid, y_valid, word_index_valid = get_data(r\"C:\\Users\\praka\\Omden\\IraqGunViolence\\Combined\\valid\")\n",
+    "#X_valid, y_valid, word_index_valid = get_data(\"/home/zmccoy/sandbox/sentiment-analysis-arabic/Erik/valid\")\n",
+    "print(X_valid.shape)\n",
+    "print(y_valid.shape)\n",
+    "print(len(word_index_valid))\n",
+    "#X_test, y_test, word_index_test = get_data(\"/home/zmccoy/sandbox/sentiment-analysis-arabic/Erik/test\")\n",
+    "#print(X_test.shape)\n",
+    "#print(y_test.shape)\n",
+    "#print(len(word_index_test))\n",
+    "word_index = {}\n",
+    "for wi in (word_index_train, word_index_valid, word_index_test): word_index.update(wi)\n",
+    "print(len(word_index))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 36,
+   "id": "c10e0e47",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "(7544, 300)\n"
+     ]
+    }
+   ],
+   "source": [
+    "def create_embedding_matrix(word_index):\n",
+    "    nb_words = min(MAX_NB_WORDS, len(word_index))+1\n",
+    "    embedding_matrix = np.zeros((nb_words, EMBEDDING_DIM))    \n",
+    "    \n",
+    "    for word, ii in word_index.items():\n",
+    "        if word in w2v.key_to_index :\n",
+    "            embedding_matrix[ii] = w2v.get_vector(word)\n",
+    "    return embedding_matrix\n",
+    "\n",
+    "embedding_matrix = create_embedding_matrix(word_index)\n",
+    "print(embedding_matrix.shape)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ce12f55c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "embedding_layer = w2v.get_keras_embedding(train_embeddings=False)\n",
+    "print(embedding_layer.input_dim)\n",
+    "print(embedding_layer.output_dim)\n",
+    "#embedding_layer.set_weights(embedding_matrix)\n",
+    "#embedding_layer.get_weights()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 38,
+   "id": "cbbddc52",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from keras.callbacks import ModelCheckpoint, EarlyStopping\n",
+    "def get_callbacks(weights_filepath):\n",
+    "    checkpoint = ModelCheckpoint(filepath=weights_filepath, monitor='val_loss', verbose=1, save_best_only=True, mode='min')\n",
+    "    early_stopping = EarlyStopping(monitor='val_loss', patience=4)\n",
+    "    callbacks = [checkpoint, early_stopping]\n",
+    "    return callbacks"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
