@@ -1,4 +1,4 @@
-# Task 1 data srcaping Folder Details
+# Task 3 data annotation Folder Details
 
 This repository contains code to help annotate the data collected in the webscrapping phase to label them into two classes violent and not.
 
