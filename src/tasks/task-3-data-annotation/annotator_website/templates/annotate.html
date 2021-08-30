@@ -1,0 +1,121 @@
+
+<html lang="en" >
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Omdena-Iraqi chapter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- jquery-ui -->
+    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+
+
+
+  </head>
+
+  <body >
+    <div id="page_contents_loader" class="row">
+      <div class="col-12">
+        <h4>Please wait</h4>
+        <div class="loader" id="page_contents_loader">
+        </div>
+      </div>
+    </div>
+    <div id="page_contents" class="row">
+      <div class="col-12">
+        <div class="card text-center">
+          <div class="card-header">
+            Do you think this sentence sounds violent?
+          </div>
+          <div class="card-body">
+            <h5 class="card-title" id="iraqi_sentence"> </h5>
+			<h5 class="card-title" id="en_iraqi_sentence"> </h5>
+            <p class="card-text">
+              <form id="smileys">
+              	<input type="radio" name="smiley" value="1" data-value="Yes, it is violent" class="sad">
+              	<input type="radio" name="smiley" value="2" data-value="Not sure" class="neutral">
+              	<input type="radio" name="smiley" value="3" data-value="No, it is not" class="happy" >
+                <input id="no_comment_radio" type="radio" name="smiley" value="4" data-value="I can't understand what it means" class="no_comment" checked="checked">
+              	<div><span id="result"></span></div>
+                <input type="hidden" name="iraqi_sentence_id" />
+              </form>
+            </p>
+          </div>
+          <div class="card-footer text-muted">
+            <span id="remaining"></span>
+            <button id="next_iraqi_sentence" class="btn btn-block btn-primary">Save </button>
+            <span id="done"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+      $(document).ready(function () {
+        $("#page_contents_loader").hide();
+        $("input[name=\"smiley\"]").click(function(e){
+          var value = $(this).attr('data-value');
+          $('#result').html(value);
+
+        })
+        $("#next_iraqi_sentence").click(function(e){
+          var user_id = $(this).attr('data-id');
+          var post_data=$("form").serialize();
+		  $("#page_contents").hide();
+          $("#page_contents_loader").show();
+          
+          $.post("https://omdena-iraq.herokuapp.com/save_user_rating_api",
+                  post_data
+          , function (data, status) {
+            $("#page_contents_loader").hide();
+            $("#page_contents").show();
+              //data = $.parseJSON(data);
+              if (data["error"] == false) {
+			  $("#page_contents").hide();
+				$("#page_contents_loader").show();
+                  $.post("https://omdena-iraq.herokuapp.com/annotate_api", function (result) {
+				  $("#page_contents_loader").hide();
+					$("#page_contents").show();
+                    $("#iraqi_sentence").html(result['iraqi_sentence']);
+					$("#en_iraqi_sentence").html(result['translated_sentence']);
+                    $("input[name=\"iraqi_sentence_id\"]").val(result['iraqi_sentence_id']);
+                    $("#remaining").html(result['remaining']);
+                    $("#done").html(result['done']);
+                    $("#no_comment_radio").prop("checked", true);
+                    var value = $("#no_comment_radio").attr('data-value');
+                    $('#result').html(value);
+                    });
+              } else
+              {
+                alert("لقد حصل خطأ ما , حاول مرة اخرى");
+              }
+          });
+
+        })
+		$("#page_contents_loader").show();
+          $("#page_contents").hide();
+        $.post("https://omdena-iraq.herokuapp.com/annotate_api", function (result) {
+			$("#page_contents_loader").hide();
+            $("#page_contents").show();
+          $("#iraqi_sentence").html(result['iraqi_sentence']);
+		  $("#en_iraqi_sentence").html(result['translated_sentence']);
+          $("input[name=\"iraqi_sentence_id\"]").val(result['iraqi_sentence_id']);
+          $("#remaining").html(result['remaining']);
+          $("#done").html(result['done']);
+          $("#no_comment_radio").prop("checked", true);
+          var value = $("#no_comment_radio").attr('data-value');
+          $('#result').html(value)
+
+          });
+        });
+    </script>
+  </body>
+</html>

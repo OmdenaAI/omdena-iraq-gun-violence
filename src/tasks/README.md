@@ -16,4 +16,4 @@ Note : Please Follow the below guidelines to create task folders
 |3|         |         |
 |4|         |         |
 |5|task-5-modelling|Training different machine learning models to classify violence from non-violent tweets.|
-|6|task-6-data-visualization-documentation|Using cleaned data and labeled data to create visualizations. Create final report|
+|6|task-6-data-visualization-documentation|Using cleaned data and labeled data to create visualizations. Create final report& Omdena blog post|

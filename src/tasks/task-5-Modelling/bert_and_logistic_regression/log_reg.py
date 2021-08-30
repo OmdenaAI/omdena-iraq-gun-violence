@@ -9,7 +9,7 @@ nltk.download('stopwords')
 import matplotlib.pyplot as plt
 import seaborn as sn
 
-
+# NOTE: run data_cleaning.py first in order to generate twitter_hatespeech_dataset_after_cleaning.csv
 df = pd.read_csv('../../data/twitter_hatespeech_dataset_after_cleaning.csv')
 
 df = df.iloc[:,[2,4]]

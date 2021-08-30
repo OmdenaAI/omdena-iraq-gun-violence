@@ -5,6 +5,7 @@ import torch
 from torch.utils.data import DataLoader
 from transformers import DistilBertForSequenceClassification, Trainer, TrainingArguments
 
+# NOTE: run data_cleaning.py first in order to generate twitter_hatespeech_dataset_after_cleaning.csv
 df = pd.read_csv('../../data/twitter_hatespeech_dataset_after_cleaning.csv')
 pd.set_option('display.max_columns', None)
 print(df.head())
