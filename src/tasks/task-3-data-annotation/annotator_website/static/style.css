@@ -1,0 +1,93 @@
+body {
+  align-items: center;
+  display: flex;
+  font-family: Helvetica, sans-serif;
+  height: 100vh;
+  justify-content: center;
+  margin: 0;
+}
+body div {
+  font-size: 15px;
+  margin-top: 15px;
+  text-align: center;
+}
+
+form#smileys input[type="radio"] {
+  -webkit-appearance: none;
+  width: 90px;
+  height: 90px;
+  border: none;
+  cursor: pointer;
+  transition: border .2s ease;
+  -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
+  margin: 0 5px;
+  transition: all .2s ease;
+}
+form#smileys input[type="radio"]:hover, form#smileys input[type="radio"]:checked {
+  -webkit-filter: grayscale(0);
+          filter: grayscale(0);
+}
+form#smileys input[type="radio"]:focus {
+  outline: 0;
+}
+form#smileys input[type="radio"].happy {
+  background: url("https://res.cloudinary.com/turdlife/image/upload/v1492864443/happy_ampvnc.svg") center;
+  background-size: cover;
+}
+form#smileys input[type="radio"].neutral {
+  background: url("https://res.cloudinary.com/turdlife/image/upload/v1492864443/neutral_t3q8hz.svg") center;
+  background-size: cover;
+}
+form#smileys input[type="radio"].sad {
+  background: url("https://res.cloudinary.com/turdlife/image/upload/v1492864443/sad_bj1tuj.svg") center;
+  background-size: cover;
+}
+form#smileys input[type="radio"].no_comment {
+  background: url("./images/no_comment.png") center;
+  background-size: cover;
+}
+
+form#words input[type="radio"] {
+  -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
+  margin: 0 5px;
+  transition: all .2s ease;
+}
+form#words input[type="radio"]:hover, form#smileys input[type="radio"]:checked {
+  -webkit-filter: grayscale(0);
+  filter: grayscale(0);
+  font-weight: bold;
+  color: #333;
+  background-color: #ffc;
+}
+form#words input[type="radio"]:focus {
+  outline: 0;
+}
+.loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 60px;
+            height: 60px;
+            margin:0 auto;
+            -webkit-animation: spin 2s linear infinite; /* Safari */
+            animation: spin 2s linear infinite;
+        }
+
+.mtt {
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+  color: #999;
+  text-decoration: none;
+}
+.mtt span {
+  color: #e74c3c;
+}
+.mtt:hover {
+  color: #666;
+}
+.mtt:hover span {
+  color: #c0392b;
+}
